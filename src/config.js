@@ -1,7 +1,7 @@
 const config = {
     routes: {
         HOME: "/",
-        PRODUCTS: "/planets"
+        PLANETS: "/planets"
     }
 }
 
