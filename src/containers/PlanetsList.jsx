@@ -8,16 +8,22 @@ const PlanetsList = () => {
 
     const [planets, setPlanets] = useState([])
     const [error, setError] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+
 
     const getData = async () => {
         try {
+            setIsLoading(true)
             // ------------------------IMPORTANTE PARA API -----------------------//
             const res = await getPlanets() // hacer la petición
             //console.log(res.data); // Limpiar la data
             //console.log(res.data.results); // usar la data 
+            setIsLoading(false)
             setPlanets(res.data.results)
 
         } catch (error) {
+            setIsLoading(false)
+
             setError(error.message)
 
         }
@@ -36,7 +42,10 @@ const PlanetsList = () => {
     return (
         <>
             {
-               error.length > 0 && <p>error: {error}</p> // Shortcircuits,
+                isLoading ? <p>...Loading</p> : null
+            }
+            {
+                error.length > 0 && <p>error: {error}</p> // Shortcircuits,
             }
             {console.log("planets", planets)}
             {
