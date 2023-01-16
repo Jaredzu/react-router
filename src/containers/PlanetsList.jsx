@@ -7,14 +7,21 @@ import config from '../config'
 const PlanetsList = () => {
 
     const [planets, setPlanets] = useState([])
+    const [error, setError] = useState("")
 
     const getData = async () => {
+        try {
+            // ------------------------IMPORTANTE PARA API -----------------------//
+            const res = await getPlanets() // hacer la petición
+            //console.log(res.data); // Limpiar la data
+            //console.log(res.data.results); // usar la data 
+            setPlanets(res.data.results)
 
-        // ------------------------IMPORTANTE PARA API -----------------------//
-        const res = await getPlanets() // hacer la petición
-        //console.log(res.data); // Limpiar la data
-        //console.log(res.data.results); // usar la data 
-        setPlanets(res.data.results)
+        } catch (error) {
+            setError(error.message)
+
+        }
+
     }
 
     useEffect(() => {
@@ -28,6 +35,9 @@ const PlanetsList = () => {
 
     return (
         <>
+            {
+               error.length > 0 && <p>error: {error}</p> // Shortcircuits,
+            }
             {console.log("planets", planets)}
             {
                 planets.map((element, id) => <Card
